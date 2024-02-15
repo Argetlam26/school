@@ -1,4 +1,4 @@
-﻿// Welcome screen
+// Welcome screen
 Console.WriteLine("|This is an app for your homework assignments|");
 Console.Write("!!!YOU CAN ALWAYS CLICK");
 Console.ForegroundColor = ConsoleColor.Red;
@@ -10,7 +10,7 @@ Console.Write(" \"HELP\" ");
 Console.ForegroundColor = ConsoleColor.Black;
 Console.WriteLine("TO VIEW THE MANUAL!!!");
 
-// Defining lists for parts of the assignmenst
+// Defining lists for parts of the assignments
 List<string> names = new List<string>();
 List<string> descriptions = new List<string>();
 List<string> isItDone = new List<string>();
@@ -84,7 +84,7 @@ while (true)
         // Calculating longest assignment ==> size of assignment box
         for (int i = 0; i < names.Count; i++)
         {
-            assignmentLengths[i] = names[i].Length + descriptions[i].Length;
+            assignmentLengths[i] = names[i].Length + descriptions[i].Length + 22 + isItDone[i].Length + deadline[i].Length;
         }
 
         int longestAssignmentPart = assignmentLengths[0];
@@ -119,7 +119,7 @@ while (true)
         // Prints the assignments + borders
         for (int i = 0; i < names.Count; i++)
         {
-            Console.Write("| " + names[i] + " - " + descriptions[i]);
+            Console.Write("| [ID=" + i + "; " + isItDone[i] + "]{" + deadline[i] + "; Priority=" + priority[i] + "} " + names[i] + " - " + descriptions[i]);
             for (int j = 0; j < longestAssignmentPart - assignmentLengths[i]; j++)
             {
                 Console.Write(" ");
@@ -148,6 +148,7 @@ while (true)
         Console.WriteLine("Enter the deadline in format DD/MM/YYYY");
         string assignmentDeadline = Console.ReadLine();
         deadline.Insert(i, assignmentDeadline);
+        Console.WriteLine("Assignment deadline successfully added!");
     }   
     
     // Add an assignment
@@ -166,13 +167,14 @@ while (true)
             string newDescription = Console.ReadLine();
             Console.WriteLine("How important is this project? Scale from 1-5. 1 = Not important at all, 5 = Vitally important:");
             string newPriority = Console.ReadLine();
-            Console.WriteLine("Assignment succesfully added! You can click V to (V)iew your assignments.");
+            Console.WriteLine("Assignment successfully added! You can click V to (V)iew your assignments.");
             names.Insert(0,newAssignment);
             descriptions.Insert(0,newDescription);
             isItDone.Insert(0, "to-do");
             deadline.Insert(0, "no deadline");
             priority.Insert(0, newPriority);
         }
+        
     }
 
     // Remove an assignment
@@ -183,6 +185,9 @@ while (true)
         int i = Int32.Parse(strI);
         names.RemoveAt(i);
         descriptions.RemoveAt(i);
+        priority.RemoveAt(i);
+        deadline.RemoveAt(i);
+        isItDone.RemoveAt(i);
         Console.WriteLine("Successfully removed assignment " + i);
         Console.ForegroundColor = ConsoleColor.Red;
         Console.WriteLine("Be careful, as some of the assignment's IDs have changed. Press V to check new IDs");
