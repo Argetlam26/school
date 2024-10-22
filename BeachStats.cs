@@ -5,7 +5,73 @@ namespace BeachStats
 {
     class Program
     {
-        public static void VytvorBox(string s)
+        public static void WelcomeMessage()
+        {
+            string welcome = "Vitejte v aplikaci BeachStats!";
+            for (int i = 0; i < welcome.Length; i++)
+            {
+                Console.Write(welcome[i]);
+                Thread.Sleep(100);
+            }
+            MakeBox("napište “p” pro přihlášení nebo “r” pro registraci\nstiskněte ENTER pro potvrzení");
+        }
+
+        public static void LoginAndRegister()
+        {
+            while (true)
+            {
+                string logOrReg = Console.ReadLine();
+                if (logOrReg == "p")
+                {
+                    MakeBox("Zahajili jste PRIHLASENI\nnapiste jmeno hrace pro ktereho chcete statistiku tvorit\nstisknete ENTER pro potvrzeni");
+                    string expectedUserPath;
+                    
+                    do
+                    {
+                        string logUsername;
+                        do
+                        {
+                            logUsername = Console.ReadLine();
+                            if (logUsername == "")
+                            {
+                                MakeBox("Nebylo zadano zadne jmeno, zkuste znovu");
+                            }
+                        } while (logUsername == "");
+
+                        expectedUserPath = Directory.GetCurrentDirectory() + "\\" + logUsername;
+                        if (!Directory.Exists(expectedUserPath))
+                        {
+                            MakeBox("Uzivatel na vasem zarizeni neexistuje\nZkuste znovu");
+                        }
+
+                    } while (!Directory.Exists(expectedUserPath));
+                    
+                    MakeBox("Prihlaseni probehlo uspesne!");
+                    break;
+                }
+
+                if (logOrReg == "r")
+                {
+                    MakeBox("Zahajili jste REGISTRACI\nnapiste jmeno hrace pro ktereho chcete statistiku tvorit\nstisknete ENTER pro potvrzeni");
+                    string regUsername;
+                    do
+                    {
+                        regUsername = Console.ReadLine();
+                        if (regUsername == "")
+                        {
+                            MakeBox("Nebylo zadano zadne jmeno, zkuste znovu");
+                        }
+                    } while (regUsername == "");
+                    
+                    Directory.CreateDirectory(Directory.GetCurrentDirectory() + "\\" + regUsername);
+                    MakeBox("Uzivatel uspesne vytvoren");
+                    
+                    break;
+                }
+                MakeBox("Nebylo vlozeno \"r\" nebo \"p\". Zkuste znovu");
+            }
+        }
+        public static void MakeBox(string s)
         {
             Console.WriteLine();
             for (int i = 0; i < 80; i++)
@@ -23,34 +89,13 @@ namespace BeachStats
         
         public static void Main(string[] args)
         {
-            string welcome = "Vitejte v aplikaci BeachStats!";
-            for (int i = 0; i < welcome.Length; i++)
-            {
-                Console.Write(welcome[i]);
-                Thread.Sleep(100);
-            }
-            VytvorBox("napište “p” pro přihlášení nebo “r” pro registraci\nstiskněte ENTER pro potvrzení");
-            
-            while (true)
-            {
-                string logOrReg = Console.ReadLine();
-                
-                if (logOrReg == "r")
-                {
-                    // Registrace
-                    break;
-                }
-                if (logOrReg == "p")
-                {
-                    // Prihlaseni
-                    break;
-                }
+            WelcomeMessage();
+            LoginAndRegister();
+        }
+    }
+}
 
-                VytvorBox("Nebylo vlozeno \"r\" nebo \"p\". Zkuste znovu:");
-            }
-            
-            
-            /*
+/*
             Console.WriteLine("Registrace nebo Prihlaseni");
             if (Console.ReadLine() == "r")
             {
@@ -75,19 +120,16 @@ namespace BeachStats
             */
 
 
-            /*
-            string dataToSave = "Imagine if this worked?";
-            string username = Console.ReadLine();
-            string filePath = username + ".txt";
+/*
+string dataToSave = "Imagine if this worked?";
+string username = Console.ReadLine();
+string filePath = username + ".txt";
 
-            File.WriteAllText(filePath, dataToSave);
+File.WriteAllText(filePath, dataToSave);
 
-            string filePath = "testFile.txt";
-            string data = File.ReadAllText(filePath);
-            Console.WriteLine(data);
+string filePath = "testFile.txt";
+string data = File.ReadAllText(filePath);
+Console.WriteLine(data);
 
-            Directory.CreateDirectory(Directory.GetCurrentDirectory() + "\\directory");
-            */
-        }
-    }
-}
+Directory.CreateDirectory(Directory.GetCurrentDirectory() + "\\directory");
+*/
