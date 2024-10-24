@@ -13,13 +13,14 @@ namespace BeachStats
                 Console.Write(welcome[i]);
                 Thread.Sleep(100);
             }
-            MakeBox("napište “p” pro přihlášení nebo “r” pro registraci\nstiskněte ENTER pro potvrzení");
         }
 
         public static void LoginAndRegister()
         {
             while (true)
             {
+                MakeBox("napište “p” pro přihlášení nebo “r” pro registraci\nstiskněte ENTER pro potvrzení");
+
                 string logOrReg = Console.ReadLine();
                 if (logOrReg == "p")
                 {
@@ -86,11 +87,42 @@ namespace BeachStats
             }
             Console.WriteLine();
         }
-        
+
+        public static void Menu()
+        {
+            while (true)
+            {
+                MakeBox("napište \"n\" pro nový záznam a stiskněte ENTER\nnapište \"s\" pro statistiky a stiskněte ENTER\n\nstisknutím “z” se vrátíte zpět");
+
+                string menuChoice = Console.ReadLine();
+                if (menuChoice == "n")
+                {
+                    Console.WriteLine("Data input coming soon");
+                    break;
+                }
+                if (menuChoice == "s")
+                {
+                    Console.WriteLine("Statistics coming soon");
+                    break;
+                }
+                if (menuChoice == "z")
+                {
+                    LoginAndRegister();
+                    break;
+                }
+
+                Console.WriteLine("Nebylo vlozeno \"n\" nebo \"s\". Zkuste zaonovu");
+            }
+        }
+            
         public static void Main(string[] args)
         {
-            WelcomeMessage();
-            LoginAndRegister();
+            // WelcomeMessage();
+            // LoginAndRegister();
+            while (true)
+            {
+                Menu();
+            }
         }
     }
 }
